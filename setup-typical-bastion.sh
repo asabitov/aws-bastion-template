@@ -13,7 +13,7 @@ REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/documen
 
 BASTION_NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text | cut -f5)
 
-if [ -z $TAG_VALUE ]; then
+if [ -z $BASTION_NAME ]; then
   BASTION_NAME="bastion"
 fi  
 
