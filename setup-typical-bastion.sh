@@ -1,7 +1,7 @@
 #!/bin/bash
 
 yum -y install epel-release
-yum -y install strace tcpdump vim mc wget git curl jq
+yum -y install strace tcpdump strace vim mc wget git curl jq bind-utils
 yum -y install python34 python34-pip
 
 pip3 install awscli --upgrade --user
