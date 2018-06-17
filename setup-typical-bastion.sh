@@ -1,7 +1,7 @@
 #!/bin/bash
 
 yum -y install epel-release
-yum -y install strace tcpdump strace vim mc wget git curl jq bind-utils
+yum -y install telnet strace tcpdump strace vim mc wget git curl jq bind-utils mariadb docker
 yum -y install python34 python34-pip
 
 pip3 install awscli --upgrade --user
@@ -28,5 +28,8 @@ fi
 mkdir -p /root/{git,tmp}
 
 git config --global push.default simple
+
+systemctl enable docker
+systemctl start docker
 
 echo "Please don't forget to reboot!" 
