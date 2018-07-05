@@ -30,7 +30,7 @@ fi
 
 ### Install AWS CLI
 
-pip3 install awscli --upgrade --user
+pip3.6 install awscli --upgrade --user
 export PATH=$PATH:/root/.local/bin/
 sed -i 's/^PATH=$PATH:$HOME\/bin$/PATH=$PATH:$HOME\/bin:\/root\/.local\/bin/' ~/.bash_profile
 
