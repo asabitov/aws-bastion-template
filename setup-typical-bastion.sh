@@ -3,7 +3,7 @@
 ### Install essential software
 
 yum -y install epel-release
-yum -y install telnet strace tcpdump strace vim mc wget git curl jq bind-utils mariadb docker
+yum -y install telnet strace tcpdump strace vim mc wget git curl jq bind-utils mariadb docker zip
 yum -y install python34 python34-pip
 
 ### Change host's name
