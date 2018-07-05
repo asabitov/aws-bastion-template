@@ -3,7 +3,7 @@
 ### Install essential software
 
 yum -y install epel-release
-yum -y install telnet strace tcpdump strace vim mc wget git curl jq bind-utils mariadb docker zip
+yum -y install telnet strace tcpdump strace vim mc wget git curl jq bind-utils mariadb docker zip unzip
 
 yum -y install https://centos7.iuscommunity.org/ius-release.rpm
 yum -y install python36u python36u-pip
