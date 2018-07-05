@@ -4,7 +4,9 @@
 
 yum -y install epel-release
 yum -y install telnet strace tcpdump strace vim mc wget git curl jq bind-utils mariadb docker zip
-yum -y install python34 python34-pip
+
+yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+yum -y install python36u python36u-pip
 
 ### Change host's name
 
