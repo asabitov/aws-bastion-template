@@ -20,7 +20,7 @@ if [ -z $BASTION_NAME ]; then
   BASTION_NAME="bastion"
 fi
 
-hostnamectl set-hostname --static $BASTION_NAME
+hostnamectl set-hostname $BASTION_NAME
 
 if ! grep preserve_hostname /etc/cloud/cloud.cfg; then
   echo "preserve_hostname: true" >> /etc/cloud/cloud.cfg
