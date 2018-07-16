@@ -8,6 +8,14 @@ yum -y install telnet strace tcpdump strace vim mc wget git curl jq bind-utils m
 yum -y install https://centos7.iuscommunity.org/ius-release.rpm
 yum -y install python36u python36u-pip
 
+
+### Install AWS CLI
+
+pip3.6 install awscli --upgrade --user
+export PATH=$PATH:/root/.local/bin/
+sed -i 's/^PATH=$PATH:$HOME\/bin$/PATH=$PATH:$HOME\/bin:\/root\/.local\/bin/' ~/.bash_profile
+
+
 ### Change host's name
 
 INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
@@ -28,11 +36,6 @@ else
   sed -i 's/.*preserve_hostname:.*/preserve_hostname: true/' /etc/cloud/cloud.cfg
 fi
 
-### Install AWS CLI
-
-pip3.6 install awscli --upgrade --user
-export PATH=$PATH:/root/.local/bin/
-sed -i 's/^PATH=$PATH:$HOME\/bin$/PATH=$PATH:$HOME\/bin:\/root\/.local\/bin/' ~/.bash_profile
 
 ### Keep SSH alive
 
@@ -40,18 +43,22 @@ sed -i 's/.*ClientAliveInterval.*/ClientAliveInterval 120/' /etc/ssh/sshd_config
 sed -i 's/.*ClientAliveCountMax.*/ClientAliveCountMax 720/' /etc/ssh/sshd_config
 systemctl restart sshd
 
+
 ### Create essential folders
 
 mkdir -p /root/{git,tmp}
+
 
 ### Configure Git
 
 git config --global push.default simple
 
+
 ### Enable Docker
 
 systemctl enable docker
 systemctl start docker
+
 
 ### Reboot
 
