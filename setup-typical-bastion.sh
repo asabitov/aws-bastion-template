@@ -22,7 +22,7 @@ INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
 REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}')
 
 
-BASTION_NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text | cut -f5)
+BASTION_NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text | grep Name | cut -f5)
 
 if [ -z $BASTION_NAME ]; then
   BASTION_NAME="bastion"
