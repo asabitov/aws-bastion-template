@@ -9,18 +9,21 @@ yum -y install https://centos7.iuscommunity.org/ius-release.rpm
 yum -y install python36u python36u-pip
 
 
+### Meta-data
+
+INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
+REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}')
+
+
 ### Install AWS CLI
 
 pip3.6 install awscli --upgrade --user
 export PATH=$PATH:/root/.local/bin/
 sed -i 's/^PATH=$PATH:$HOME\/bin$/PATH=$PATH:$HOME\/bin:\/root\/.local\/bin/' ~/.bash_profile
+aws configure set default.region $REGION
 
 
 ### Change host's name
-
-INSTANCE_ID=$(curl http://169.254.169.254/latest/meta-data/instance-id)
-REGION=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep region | awk -F\" '{print $4}')
-
 
 BASTION_NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text | grep Name | cut -f5)
 
