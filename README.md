@@ -1,5 +1,5 @@
 # A typical AWS bastion host
-This project builds a typical AWS bastion with all essential software.
+This project builds a typical AWS bastion, which has all essential software.
 
 Procedure:
 * Deploy the "typical-aws-bastion.json" CloudFormation template. \
