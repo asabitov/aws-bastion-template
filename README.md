@@ -5,7 +5,7 @@ Procedure:
 * Deploy the "typical-aws-bastion.json" CloudFormation template \
 _(The template builds an EC2 instance, downloads "setup-typical-bastion.sh" and runs it. \
 Please be aware that it also creates the IAM role for the bastion to access all AWS services. \
-Please review the IAM role before deploying to production.)_:
+Please review the IAM role before deploying to production.)_: \
 ```
 # aws cloudformation create-stack
 ``` 
