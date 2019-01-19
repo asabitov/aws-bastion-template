@@ -1,4 +1,4 @@
-# A typical AWS bastion host
+# AWS bastion host template
 This project builds a typical AWS bastion, which has all essential software installed for DevOps projects.
 
 Just run: \
