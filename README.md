@@ -1,13 +1,10 @@
 # AWS bastion host template
-This project builds a typical AWS bastion, which has all essential software installed for DevOps projects.
+This CloudFormation template creates a typical AWS bastion, which has all essential software installed for DevOps projects.
 
-Just run: \
-``` $ aws cloudformation create-stack ``` \
-_(The template builds an EC2 instance, downloads "setup-typical-bastion.sh" and runs it. \
-Please be aware that it also creates the IAM role for the bastion to access all AWS services. \
-Please review the IAM role before deploying to production.)_
+Just run:
+```
+# aws cloudformation create-stack --stack-name MyBastionStack --template-body file://aws-bastion-template.json --parameters ParameterKey=KeyPairName,ParameterValue="MyKey" ParameterKey=VPCId,ParameterValue="MyVPCId" ParameterKey=SubnetId,ParameterValue="MySubnetId"
+```
 
-You can update and run the setup script locally any time as shown below: \
-``` $ sudo /opt/typical-aws-bastion/setup-typical-bastion.sh ```
-
-Tested on CentOS 7.
+Please note that the bastion host in this template has administrator access. \
+You should change bastion's permissions policy when deploying it to production.

@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS bastion host template'
+
+Parameters:
+
+  Hostname:
+    Type: 'String'
+    Default: 'bastion'
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+  KeyPairName: 
+    Type: 'String'
+  VPCId:
+    Type: 'String'  
+  SubnetId:
+    Type: 'String'
+
+Resources:
+
+  BastionSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access 
+      VpcId:  !Ref VPCId
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+
+  BastionFullAccessRole: 
+    Type: "AWS::IAM::Role"
+    Properties: 
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "ec2.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies: 
+        - 
+          PolicyName: "BastionFullAccessPolicy"
+          PolicyDocument: 
+            Version: "2012-10-17"
+            Statement: 
+              - 
+                Effect: "Allow"
+                Action: "*"
+                Resource: "*"
+
+  BastionInstanceProfile: 
+    Type: "AWS::IAM::InstanceProfile"
+    Properties: 
+      Path: "/"
+      Roles: 
+        - 
+          Ref: "BastionFullAccessRole"
+
+  MyEC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties: 
+      ImageId: !Ref LatestAmiId
+      KeyName: !Ref KeyPairName
+      InstanceType: 't2.micro'
+      SecurityGroupIds:  
+        - !Ref  BastionSecurityGroup   
+      SubnetId: !Ref SubnetId
+      IamInstanceProfile: !Ref BastionInstanceProfile
+      BlockDeviceMappings:
+        -
+          DeviceName: /dev/xvda
+          Ebs:
+            VolumeType: gp2
+            VolumeSize: 20
+      Tags: 
+        -
+          Key: 'Name'
+          Value: 
+            !Join
+              - ''
+              - -  !Ref AWS::StackName
+                -  ' - '
+                -  !Ref Hostname
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash -xe
+            yum update -y
