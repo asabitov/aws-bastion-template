@@ -6,9 +6,10 @@ Parameters:
   Hostname:
     Type: 'String'
     Default: 'bastion'
-  LatestAmiId:
-    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
-    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+  CentOSAmiId:
+    Type: 'String'
+    # 20190507 - "CentOS 7 (x86_64) - with Updates HVM"
+    Default: 'ami-08bd00d7713a39e7d'
   KeyPairName: 
     Type: 'String'
   VPCId:
@@ -65,7 +66,7 @@ Resources:
   MyEC2Instance:
     Type: 'AWS::EC2::Instance'
     Properties: 
-      ImageId: !Ref LatestAmiId
+      ImageId: !Ref CentOSAmiId
       KeyName: !Ref KeyPairName
       InstanceType: 't2.micro'
       SecurityGroupIds:  
@@ -92,3 +93,5 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             yum update -y
+            yum install git -y
+            
