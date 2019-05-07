@@ -27,11 +27,11 @@ aws configure set default.region $REGION
 
 BASTION_NAME=$(aws ec2 describe-tags --filters "Name=resource-id,Values=$INSTANCE_ID" --region=$REGION --output=text | grep Name | cut -f5)
 
-if [ -z $BASTION_NAME ]; then
+if [ -z "$BASTION_NAME" ]; then
   BASTION_NAME="bastion"
 fi
 
-hostnamectl set-hostname $BASTION_NAME
+hostnamectl set-hostname "$BASTION_NAME"
 
 if ! grep preserve_hostname /etc/cloud/cloud.cfg; then
   echo "preserve_hostname: true" >> /etc/cloud/cloud.cfg
@@ -65,4 +65,4 @@ systemctl start docker
 
 ### Reboot
 
-echo "Please don't forget to reboot!" 
+reboot 
