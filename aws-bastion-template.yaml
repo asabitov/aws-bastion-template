@@ -94,8 +94,8 @@ Resources:
             #!/bin/bash -x
             yum update -y
             yum install git -y
-            mkdir git
-            cd git
+            mkdir /root/git
+            cd /root/git
             git clone https://github.com/asabitov/aws-bastion-template.git
-            cd aws-bastion-template
+            cd /root/git/aws-bastion-template
             bash ./setup-typical-bastion.sh
