@@ -1,5 +1,5 @@
 # AWS Bastion Host Template
-This CloudFormation template creates a typical AWS bastion, which has all essential software installed for DevOps projects.
+This CloudFormation template creates a standard AWS bastion, which has all essential software installed for DevOps projects.
 
 Just run:
 ```
