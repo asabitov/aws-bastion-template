@@ -59,6 +59,9 @@ git config --global push.default simple
 
 ### Enable Docker
 
+groupadd docker
+usermod -aG docker centos
+
 systemctl enable docker
 systemctl start docker
 
